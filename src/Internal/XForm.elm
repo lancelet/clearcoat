@@ -32,20 +32,28 @@ fromMatrix m =
 
 fwdPt : XForm -> ( Float, Float ) -> ( Float, Float )
 fwdPt xform ( x, y ) =
-    fwdH xform ( x, y, 1 )
+    let
+        ( xx, yy, w ) =
+            fwdH xform ( x, y, 1 )
+    in
+    ( xx / w, yy / w )
 
 
 invPt : XForm -> ( Float, Float ) -> ( Float, Float )
 invPt xform ( x, y ) =
-    invH xform ( x, y, 1 )
+    let
+        ( xx, yy, w ) =
+            invH xform ( x, y, 1 )
+    in
+    ( xx / w, yy / w )
 
 
-fwdH : XForm -> ( Float, Float, Float ) -> ( Float, Float )
+fwdH : XForm -> ( Float, Float, Float ) -> ( Float, Float, Float )
 fwdH (XForm xform) pth =
     Mat.vecMul xform.matFwd pth
 
 
-invH : XForm -> ( Float, Float, Float ) -> ( Float, Float )
+invH : XForm -> ( Float, Float, Float ) -> ( Float, Float, Float )
 invH (XForm xform) pth =
     Mat.vecMul xform.matInv pth
 
