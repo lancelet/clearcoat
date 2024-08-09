@@ -108,33 +108,24 @@ adj (Mat m) =
 -}
 mul : Mat -> Mat -> Mat
 mul (Mat m1) (Mat m2) =
-    let
-        a =
-            m1.a * m2.a + m1.c * m2.b
-
-        b =
-            m1.b * m2.a + m1.d * m2.b
-
-        c =
-            m1.a * m2.c + m1.c * m2.d
-
-        d =
-            m1.b * m2.c + m1.d * m2.d
-
-        tx =
-            m1.a * m2.tx + m1.c * m2.ty + m1.tx
-
-        ty =
-            m1.b * m2.tx + m1.d * m2.ty + m1.ty
-    in
-    Mat { a = a, b = b, c = c, d = d, tx = tx, ty = ty }
+    Mat
+        { a = m1.a * m2.a + m1.c * m2.b
+        , b = m1.b * m2.a + m1.d * m2.b
+        , c = m1.a * m2.c + m1.c * m2.d
+        , d = m1.b * m2.c + m1.d * m2.d
+        , tx = m1.a * m2.tx + m1.c * m2.ty + m1.tx
+        , ty = m1.b * m2.tx + m1.d * m2.ty + m1.ty
+        }
 
 
 {-| Multiply a matrix by a homogeneous vector.
 -}
 vecMul : Mat -> ( Float, Float, Float ) -> ( Float, Float, Float )
 vecMul (Mat m) ( x, y, w ) =
-    ( m.a * x + m.c * y + m.tx * w, m.b * x + m.d * y + m.ty * w, w )
+    ( m.a * x + m.c * y + m.tx * w
+    , m.b * x + m.d * y + m.ty * w
+    , w
+    )
 
 
 {-| Construct a new translation matrix.
